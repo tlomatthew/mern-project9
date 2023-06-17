@@ -11,9 +11,11 @@ require("./config/passport")(passport); //因為在require的passport.js裏直�
 //而參數直接用 上面require的passport套件
 //connect to DB
 const cors = require("cors");
+const path = require("path");
+const port = process.env.PORT || 8080; //process.env.PORT是heroku自動動態設定的
 
 mongoose
-  .connect("mongodb://127.0.0.1/mernDB")
+  .connect(process.env.MOGODB_CONNECTION)
   .then(() => {
     console.log("連接到mongoDB....");
   })
@@ -26,6 +28,7 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use("/api/users", authRoute);
 //courseRoute應該被保護 只有只有登入系統的人才能新增課程或註冊課程
@@ -36,7 +39,15 @@ app.use(
   //middleware  使用passport.authenticate會執行在passport.js裡的 passport jwt strategy
   courseRoute
 );
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.NODE_ENV === "staging"
+) {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
-app.listen(8080, () => {
+app.listen(port, () => {
   console.log("backend-server is running on port 8080");
 });

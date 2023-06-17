@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
@@ -9,6 +13,8 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0"
+  },
+  "engines": {
+    "node": "18.16.0"
   }
 }
-
