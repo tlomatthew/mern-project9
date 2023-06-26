@@ -15,7 +15,7 @@ const path = require("path");
 const port = process.env.PORT || 8080; //process.env.PORT是heroku自動動態設定的
 
 mongoose
-  .connect(process.env.MOGODB_CONNECTION)
+  .connect(process.env.MONGODB_CONNECTION)
   .then(() => {
     console.log("連接到mongoDB....");
   })
