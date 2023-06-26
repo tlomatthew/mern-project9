@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:8080/api/courses/";
+const API_URL =
+  "https://project9-pratice-21178bc90ec2.herokuapp.com/api/courses/";
 
 class CourseService {
   postCourse(title, description, price) {
